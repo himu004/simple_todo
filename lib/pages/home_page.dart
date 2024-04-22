@@ -15,18 +15,23 @@ class _HomePageState extends State<HomePage> {
 
   // List of todo tasks
   List toDoList = [
-    ["Make Baby", false],
-    ["Do Exercise", false],
-    ["Do Exercise", false],
-    ["Watch Movie", false],
+
   ];
 
   // checkbox tapped
-
   void checkBoxChanged(bool? value, index) {
       setState(() {
         toDoList[index][1] = !toDoList[index][1];
       });
+  }
+
+  // Save a new task
+  void saveNewTask() {
+    setState(() {
+      toDoList.add([_controller.text, false]);
+      _controller.clear();
+    });
+    Navigator.of(context).pop();
   }
 
   // Create new task
@@ -36,11 +41,18 @@ class _HomePageState extends State<HomePage> {
         builder: (context) {
           return DialogBox(
               controller: _controller,
-            onSave: () {},
+            onSave: saveNewTask,
             onCancel: () => Navigator.of(context).pop(),
           );
         }
     );
+  }
+  // Delete task
+  void deleteTask(int index) {
+    setState(() {
+      toDoList.remove(index);
+    });
+
   }
 
   @override
@@ -66,6 +78,7 @@ class _HomePageState extends State<HomePage> {
               taskName: toDoList[index][0],
               taskCompleted: toDoList[index][1],
               onChanged: (value) => checkBoxChanged(value, index),
+              deleteFunction: (context) => deleteTask,
           );
         },
       ),
