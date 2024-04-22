@@ -14,21 +14,28 @@ class TodoTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.all(25.0),
+      padding: EdgeInsets.only(left: 25, right: 25, top: 20),
       child: Container(
         padding: EdgeInsets.all(20),
-        child: Row(
-          children: [
-            // Check Box
-
-            Checkbox(value: taskCompleted, onChanged: onChanged),
-            // Text
-            Text(taskName),
-          ],
-        ),
         decoration: BoxDecoration(
             color: Colors.yellow,
             borderRadius: BorderRadius.circular(12)
+        ),
+        child: Row(
+          children: [
+            // Check Box
+            Checkbox(
+                value: taskCompleted,
+                onChanged: onChanged,
+                activeColor: Colors.black,
+
+            ),
+            // Text
+            Text(
+                taskName,
+              style: TextStyle(decoration: taskCompleted ? TextDecoration.lineThrough :  TextDecoration.none),
+            ),
+          ],
         ),
 
       ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:todo_app_andstd/utils/dialog_box.dart';
 import 'package:todo_app_andstd/utils/todo_tile.dart';
 
 class HomePage extends StatefulWidget {
@@ -10,13 +11,14 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
 
-  // List of todo tasks
+  final _controller = TextEditingController();
 
+  // List of todo tasks
   List toDoList = [
-    ["Make Baby", true],
+    ["Make Baby", false],
     ["Do Exercise", false],
-    ["Do Exercise", true],
-    ["Watch Movie", true],
+    ["Do Exercise", false],
+    ["Watch Movie", false],
   ];
 
   // checkbox tapped
@@ -25,6 +27,20 @@ class _HomePageState extends State<HomePage> {
       setState(() {
         toDoList[index][1] = !toDoList[index][1];
       });
+  }
+
+  // Create new task
+  void createNewTask() {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return DialogBox(
+              controller: _controller,
+            onSave: () {},
+            onCancel: () => Navigator.of(context).pop(),
+          );
+        }
+    );
   }
 
   @override
@@ -36,6 +52,12 @@ class _HomePageState extends State<HomePage> {
             child: Text("ToDo")
         ),
         backgroundColor: Colors.yellow[500],
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed:  createNewTask,
+        child: Icon(Icons.add),
+        backgroundColor: Colors.yellow[600],
+        elevation: 1,
       ),
       body: ListView.builder(
         itemCount: toDoList.length,
